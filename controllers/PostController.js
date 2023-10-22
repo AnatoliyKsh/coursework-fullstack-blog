@@ -1,64 +1,62 @@
 import postModel from '../models/Post.js'
 
-export const getAll = async (req,res)=>{
-    try{
+export const getAll = async (req, res) => {
+    try {
         const posts = await PostModel.find().populate('user').exec();
 
         res.json(posts)
-    }
-    catch (err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({message: 'post error'});
     }
 }
 
-export const getOne = async (req,res)=>{
-    try{
+export const getOne = async (req, res) => {
+    try {
         const postId = req.params.id;
 
         PostModel.findOneAndUpdate({
-            _id: postId,
+                _id: postId,
 
-        },{
-            $inc: {viewsCount:1},
-        },{
-            returnDocument: 'after'
-        },(err,doc)=>{
-            if(err){
-                console.error(err);
-               return  res.status(500).json({message: 'post error returne'});
-            }
-            if(!doc){
-                return res.status(404).json({
-                    message: 'probelm'
-                })
+            }, {
+                $inc: {viewsCount: 1},
+            }, {
+                returnDocument: 'after'
+            }, (err, doc) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({message: 'post error returne'});
+                }
+                if (!doc) {
+                    return res.status(404).json({
+                        message: 'probelm'
+                    })
 
-            }
-            res.json(doc)
+                }
+                res.json(doc)
             }
         )
 
-    }
-    catch (err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({message: 'post error'});
     }
 }
 
-export const remove = async (req,res)=>{
-    try{
+export const remove = async (req, res) => {
+    try {
         const postId = req.params.id;
 
         PostModel.findOneAndDelete({
                 _id: postId,
 
 
-            },(err,doc)=>{
-                if(err){
+            }, (err, doc) => {
+                if (err) {
                     console.error(err);
-                    return  res.status(500).json({message: 'post error delete'});
+                    return res.status(500).json({message: 'post error delete'});
                 }
-                if(!doc){
+                if (!doc) {
                     return res.status(404).json({
                         message: 'probelm'
                     })
@@ -70,33 +68,31 @@ export const remove = async (req,res)=>{
             }
         )
 
-    }
-    catch (err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({message: 'post error'});
     }
 }
 
-
-export const create = async (req, res)=>{
-    try{
+export const create = async (req, res) => {
+    try {
         const doc = new postModel({
             title: req.body.title,
             text: req.body.text,
-            tags: req.body. tags,
+            tags: req.body.tags,
             imageUrl: req.body.imageUrl,
             user: req.userId,
 
         })
         const post = await doc.seve()
         res.json(post)
-    }catch (err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({message: 'post err'});
     }
 }
 
-export const update = async (req,res)=>{
+export const update = async (req, res) => {
     try {
         await PostModel.updateOne({
             _id: postId
@@ -108,9 +104,9 @@ export const update = async (req,res)=>{
             tags: req.body.tagy,
         })
         res.json({
-            success:true
+            success: true
         })
-    } catch (err){
+    } catch (err) {
         console.error(err);
         res.status(500).json({message: 'post err'});
     }

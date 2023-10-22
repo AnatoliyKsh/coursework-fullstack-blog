@@ -2,30 +2,30 @@ import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
     title: {
-        type:String,
+        type: String,
         required: true,
     },
-    test:{
-        type:String,
+    test: {
+        type: String,
         required: true,
         unique: true,
     },
-    tags:{
+    tags: {
         type: Array,
         default: [],
 
     },
-    viewsConut:{
+    viewsConut: {
         type: Number,
         default: 0,
 
-},
-    user:{
+    },
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required:true
+        required: true
     },
     imageUrl: String,
-}, { timestamps: true} )
+}, {timestamps: true})
 
-export default  mongoose.model('Post', PostSchema)
+export default mongoose.model('Post', PostSchema)
