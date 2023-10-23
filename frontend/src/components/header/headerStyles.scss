@@ -1,0 +1,25 @@
+.my-component {
+
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  &-header {
+    font-size: 24px;
+    color: #333;
+}
+
+  &-content {
+    font-size: 16px;
+    color: #666;
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      &:hover {
+        text-decoration: underline;
+    }
+  }
+}
+}

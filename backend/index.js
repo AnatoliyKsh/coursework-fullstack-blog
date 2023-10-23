@@ -6,13 +6,15 @@ import {getMe, login, register} from "./controllers/UserController.js";
 import * as PostController from "./controllers/PostController.js";
 import multer from 'multer'
 import handleValidationErrors from "./utils/handleValidationErrors.js";
+import cors from 'cors'
 
 mongoose.connect('mongodb+srv://admin:parol@cluster0.otv1lgn.mongodb.net/blog?retryWrites=true&w=majority'
 ).then(() => console.log('BD OK'))
     .catch((err) => console.log('DB not OK', err))
 
 const app = express()
-const PORT = 4444
+const PORT = 4444;
+
 
 const storage = multer.diskStorage({
     destination: (_, __, cd) => {
@@ -27,6 +29,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 app.use(express.json())
+app.use(cors());
 app.use('/uploads', express.static('uploads'))
 app.post('/auth/login', loginValidation, handleValidationErrors, login)
 app.post('/auth/register', registerValidation, handleValidationErrors, register)
@@ -41,6 +44,14 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
         url: `/uploads/${req.file.originalname}`,
     })
 })
+
+
+app.get('/hello', (req, res) => {
+    const jsonData = { message: 'Hello, DDSWorld' };
+    res.json(jsonData);
+});
+
+
 
 app.listen(PORT, (err) => {
     if (err) {

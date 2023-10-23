@@ -9,7 +9,7 @@ export default (req, res, next) => {
             req.userId = decoded._id
             next();
         } catch (e) {
-            return res.status(403).josn({
+            return res.status(403).json({
                 message: ' no pas'
             })
         }

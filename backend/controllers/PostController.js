@@ -1,15 +1,17 @@
 import postModel from '../models/Post.js'
+import PostSchema from "../models/Post.js";
 
 export const getAll = async (req, res) => {
     try {
-        const posts = await PostModel.find().populate('user').exec();
-
-        res.json(posts)
+        const posts = await PostSchema.find().populate('user').exec();
+        res.json(posts);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({message: 'post error'});
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось получить статьи',
+        });
     }
-}
+};
 
 export const getOne = async (req, res) => {
     try {
