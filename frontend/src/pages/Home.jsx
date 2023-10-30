@@ -24,8 +24,6 @@ export const Home = () => {
   return (
     <>
       <Tabs style={{ marginBottom: 15 }} value={0} aria-label="basic tabs example">
-        <Tab label="New" />
-        <Tab label="Popular" />
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
@@ -34,26 +32,14 @@ export const Home = () => {
                   <Post
                       id={obj._id}
                       title={obj.title}
-                      imageUrl={obj.imageUrl}
+                      imageUrl={obj.imageUrl ?`http://localhost:4444${obj.imageUrl}` : ''}
                       user={obj.users}
-                          createdAt={'10 november 2023'}
+                              createdAt={obj.createdAt}
                       viewsCount={obj.viewsCount}
                       commentsCount={obj.commentsCount}
                       tags={obj.tags}
-                      isEditable = {userData._id == obj._id} /*
+                      isEditable = {userData._id == obj._id}
 
-
-
-
-
-                      mb future problem obj.user._id
-
-
-
-
-
-
-                      */
                   />
               ),)}
         </Grid>
@@ -63,17 +49,17 @@ export const Home = () => {
             items={[
               {
                 user: {
-                  fullName: 'Test Name 1',
+                  fullName: 'Test User',
                   avatarUrl: '',
                 },
-                text: 'Test comment',
+                text: 'Text',
               },
               {
                 user: {
-                  fullName: 'test NAme 2',
+                  fullName: 'Test User2',
                   avatarUrl: '',
                 },
-                text: 'text text text text text text',
+                text: 'Text',
               },
             ]}
             isLoading={false}

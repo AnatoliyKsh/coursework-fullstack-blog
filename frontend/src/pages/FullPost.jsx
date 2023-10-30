@@ -4,7 +4,7 @@ import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import axios from "../axios";
-
+import ReactMarkdown from "react-markdown";
 export const FullPost = () => {
 
 
@@ -33,7 +33,7 @@ if (isLoading){
       <Post
           id={data._id}
           title={data.title}
-          imageUrl={data.imageUrl}
+          imageUrl={data.imageUrl ?`http://localhost:4444${data.imageUrl}` : ''}
           user={data.users}
           createdAt={'12 november 2090'}
           viewsCount={data.viewsCount}
@@ -42,25 +42,16 @@ if (isLoading){
           isEditable
         tags={data.tags}
         isFullPost>
-        <p>
-            {data.text}
-        </p>
+        <ReactMarkdown   children={data.text}/>
       </Post>
       <CommentsBlock
         items={[
           {
             user: {
-              fullName: "Test Name 1",
+              fullName: "Test User",
               avatarUrl: "",
             },
-            text: "Test comment 1",
-          },
-          {
-            user: {
-              fullName: "Test name 2",
-              avatarUrl: "",
-            },
-            text: "text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text text ",
+            text: "Wow it is so cool hand, I like it ",
           },
         ]}
         isLoading={false}

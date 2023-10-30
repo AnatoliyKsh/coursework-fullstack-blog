@@ -6,6 +6,11 @@ import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 
+
+
+
+
+
 export const Index = () => {
   return (
     <>
@@ -22,9 +27,10 @@ export const Index = () => {
             multiline
             fullWidth
           />
-          <Button variant="contained">Send</Button>
+          <Button type='submit' variant="contained">Send</Button>
         </div>
       </div>
+
     </>
   );
 };

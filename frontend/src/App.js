@@ -22,7 +22,8 @@ function App() {
           <Routes>
               <Route path={'/'} Component={Home}/>
               <Route path={'/Posts/:id'} Component={FullPost}/>
-              <Route path={'/AddPost'} Component={AddPost}/>
+              <Route path={'/Posts/:id/edit'} Component={AddPost}/>
+              <Route path={'/add-post'} Component={AddPost}/>
               <Route path={'/Login'} Component={Login}/>
               <Route path={'/Registration'} Component={Registration}/>
           </Routes>

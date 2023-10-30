@@ -19,9 +19,9 @@ export const Registration = () => {
 
     const {register, handleSubmit,setError,formState:{errors,isValid}} = useForm({
         defaultValues:{
-            fullName: ' testName',
-            email:'test@test2.ru',
-            password:'123456',
+            fullName: '',
+            email:'',
+            password:'',
         },
         mode:"onChange"
     })
@@ -53,16 +53,16 @@ export const Registration = () => {
      <form  onSubmit={handleSubmit(onSubmit)}>
          <TextField   error={Boolean(errors.fullName?.message)}
                       helperText={errors.fullName?.message}
-                      {...register('fullName',{required:'write fullName'})}
-                      fullWidth className={styles.field} label="fullName" fullWidth />
+                      {...register('fullName',{required:'Write Full Name'})}
+                      fullWidth className={styles.field} label="Full Name" fullWidth />
          <TextField  error={Boolean(errors.email?.message)}
                      helperText={errors.email?.message} type="email"
-                     {...register('email',{required:'write email'})}
+                     {...register('email',{required:'Write email'})}
                      fullWidth className={styles.field} label="E-Mail" fullWidth />
          <TextField  error={Boolean(errors.password?.message)}
                      helperText={errors.password?.message} type='password'
-                     {...register('password',{required:'write password'})}
-                     fullWidth className={styles.field} label="password" fullWidth />
+                     {...register('password',{required:'Write Password'})}
+                     fullWidth className={styles.field} label="Password" fullWidth />
          <Button disabled={!isValid} type='submit' size="large" variant="contained" fullWidth>
              Registration
          </Button>

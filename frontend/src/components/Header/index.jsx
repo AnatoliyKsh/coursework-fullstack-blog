@@ -11,7 +11,7 @@ export const Header = () => {
   const dispatch  = useDispatch()
 
   const onClickLogout =  () =>{
-    if(window.confirm("logOut"))dispatch(logout())
+    if(window.confirm("log Out"))dispatch(logout())
     window.localStorage.removeItem('token')
   }
 
@@ -22,13 +22,13 @@ export const Header = () => {
         <div className={styles.inner}>
 
           <Link className={styles.logo} to="/">
-            <div>Own Blog</div>
+            <div>Blog</div>
           </Link>
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <Link to="/posts/create">
-                  <Button variant="contained">write a article</Button>
+                <Link to="/add-post">
+                  <Button variant="contained">Create a post</Button>
                 </Link>
                 <Button onClick={onClickLogout} variant="contained" color="error">
                   Log out

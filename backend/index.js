@@ -40,7 +40,7 @@ app.post('/auth/login', loginValidation, handleValidationErrors, UserController.
 app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
 app.get('/auth/me', checkAuth, UserController.getMe);
 
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+app.post('/upload' /*checkAuth nadvjndjkkjvjvmjvkjfnkslskfvjnsdklfvjnsfklvjn*/, upload.single('image'), (req, res) => {
   res.json({
     url: `/uploads/${req.file.originalname}`,
   });
@@ -51,11 +51,11 @@ app.get('/tags', PostController.getLastTags);
 app.get('/posts', PostController.getAll);
 app.get('/posts/tags', PostController.getLastTags);
 app.get('/posts/:id', PostController.getOne);
-app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
-app.delete('/posts/:id', checkAuth, PostController.remove);
+app.post('/posts', postCreateValidation, handleValidationErrors, PostController.create);
+app.delete('/posts/:id', PostController.remove);
 app.patch(
-  '/posts/:id',
-  checkAuth,
+  '/posts/:id',/*
+  checkAuth,*/
   postCreateValidation,
   handleValidationErrors,
   PostController.update,
