@@ -1,62 +1,70 @@
-import express from 'express'
-import mongoose from "mongoose"
-import {registerValidation, loginValidation, postCreateValidation} from "./validations/auth.js";
-import checkAuth from "./utils/checkAuth.js";
-import {getMe, login, register} from "./controllers/UserController.js";
-import * as PostController from "./controllers/PostController.js";
-import multer from 'multer'
-import handleValidationErrors from "./utils/handleValidationErrors.js";
-import cors from 'cors'
+import express from 'express';
+import fs from 'fs';
+import multer from 'multer';
+import cors from 'cors';
 
-mongoose.connect('mongodb+srv://admin:parol@cluster0.otv1lgn.mongodb.net/blog?retryWrites=true&w=majority'
-).then(() => console.log('BD OK'))
-    .catch((err) => console.log('DB not OK', err))
+import mongoose from 'mongoose';
 
-const app = express()
-const PORT = 4444;
+import { registerValidation, loginValidation, postCreateValidation } from './validations.js';
 
+import { handleValidationErrors, checkAuth } from './utils/index.js';
+
+import { UserController, PostController } from './controllers/index.js';
+
+mongoose
+  .connect('mongodb+srv://admin:parol@cluster0.otv1lgn.mongodb.net/blog?retryWrites=true&w=majority')
+  .then(() => console.log('DB ok'))
+  .catch((err) => console.log('DB error', err));
+
+const app = express();
 
 const storage = multer.diskStorage({
-    destination: (_, __, cd) => {
-        cd(null, 'uplaods')
-    },
-    filename: (_, file, cd) => {
-        cd(null, file.originalname)
+  destination: (_, __, cb) => {
+    if (!fs.existsSync('uploads')) {
+      fs.mkdirSync('uploads');
     }
-
-})
-
-const upload = multer({storage})
-
-app.use(express.json())
-app.use(cors());
-app.use('/uploads', express.static('uploads'))
-app.post('/auth/login', loginValidation, handleValidationErrors, login)
-app.post('/auth/register', registerValidation, handleValidationErrors, register)
-app.get('/auth/me', checkAuth, getMe)
-app.post('/posts', checkAuth, postCreateValidation, PostController.create);
-app.get('/posts', PostController.getAll);
-app.get('/posts/:id', PostController.getOne);
-app.delete('/posts/:id', checkAuth, handleValidationErrors, PostController.remove);
-app.patch('/posts', checkAuth, handleValidationErrors, PostController.update);
-app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
-    res.json({
-        url: `/uploads/${req.file.originalname}`,
-    })
-})
-
-
-app.get('/hello', (req, res) => {
-    const jsonData = { message: 'Hello, DDSWorld' };
-    res.json(jsonData);
+    cb(null, 'uploads');
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
 });
 
+const upload = multer({ storage });
 
+app.use(express.json());
+app.use(cors());
+app.use('/uploads', express.static('uploads'));
 
-app.listen(PORT, (err) => {
-    if (err) {
-        console.log('server error')
-    } else {
-        console.log('server OK')
-    }
-})
+app.post('/auth/login', loginValidation, handleValidationErrors, UserController.login);
+app.post('/auth/register', registerValidation, handleValidationErrors, UserController.register);
+app.get('/auth/me', checkAuth, UserController.getMe);
+
+app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
+  res.json({
+    url: `/uploads/${req.file.originalname}`,
+  });
+});
+
+app.get('/tags', PostController.getLastTags);
+
+app.get('/posts', PostController.getAll);
+app.get('/posts/tags', PostController.getLastTags);
+app.get('/posts/:id', PostController.getOne);
+app.post('/posts', checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
+app.delete('/posts/:id', checkAuth, PostController.remove);
+app.patch(
+  '/posts/:id',
+  checkAuth,
+  postCreateValidation,
+  handleValidationErrors,
+  PostController.update,
+);
+
+app.listen(process.env.PORT || 4444, (err) => {
+  if (err) {
+    return console.log(err);
+  }
+
+  console.log('Server OK');
+});

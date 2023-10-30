@@ -1,26 +1,22 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 export default (req, res, next) => {
-    const token = (req.headers.authorization || '')
+  const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
-    if (token) {
-        try {
-            const decoded = jwt.verify(token, 'secret')
-            req.userId = decoded._id
-            next();
-        } catch (e) {
-            return res.status(403).json({
-                message: ' no pas'
-            })
-        }
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, 'secret123');
 
-    } else {
-        return res.status(403).josn({
-            message: ' no pas'
-        })
+      req.userId = decoded._id;
+      next();
+    } catch (e) {
+      return res.status(403).json({
+        message: 'access error',
+      });
     }
-
-    console.log(token);
-
-    next()
-}
+  } else {
+    return res.status(403).json({
+      message: 'Access error',
+    });
+  }
+};
