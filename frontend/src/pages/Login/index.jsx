@@ -7,58 +7,59 @@ import {useForm} from "react-hook-form";
 import styles from "./Login.module.scss";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchUserData, selectIsAuth} from "../../redux/slices/auth";
-import { Navigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 export const Login = () => {
-    const isAuth =useSelector(selectIsAuth)
+    const isAuth = useSelector(selectIsAuth)
     const dispatch = useDispatch()
-
-    const {register, handleSubmit,setError,formState:{errors,isValid}} = useForm({
-        defaultValues:{
-            email:'test@teasst2.ru',
-            password:'1234566',
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        defaultValues: {
+            email: '',
+            password: '',
         },
-        mode:"onChange"
+        mode: "onChange"
     })
 
-    const onSubmit = async (values) =>{
-    const data =await dispatch(fetchUserData(values))
+    // asynchronously fetches user data, checks for a valid payload and stores the token
+    const onSubmit = async (values) => {
+        const data = await dispatch(fetchUserData(values))
 
-        if(!data.payload){
+        if (!data.payload) {
             return console.log('error payload')
         }
 
-if('token' in data.payload){
-    window.localStorage.setItem('tekon', data.payload.token)
-}
+        if ('token' in data.payload) {
+            window.localStorage.setItem('tekon', data.payload.token)
+        }
     }
 
-if(isAuth){
-    return <Navigate to={'/'}/>
-}
+    // if the user is authenticated, redirects to the home page
+    if (isAuth) {
+        return <Navigate to={'/'}/>
+    }
 
 
-  return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography classes={{ root: styles.title }} variant="h5">
-        LogIn
-      </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}><TextField
-          className={styles.field}
-          label="E-Mail"
-          error={Boolean(errors.email?.message)}
-          helperText={errors.email?.message}
-          {...register('email',{required:'write email'})}
-          fullWidth
-      />
-          <TextField className={styles.field} label="password"
-                     error={Boolean(errors.password?.message)}
-                     helperText={errors.password?.message}
-                     {...register('password',{required:'write password'})}
-                     fullWidth />
-          <Button type={"submit"} size="large" variant="contained" fullWidth>
-              Log In
-          </Button></form>
-    </Paper>
-  );
+    return (
+        <Paper classes={{root: styles.root}}>
+            <Typography classes={{root: styles.title}} variant="h5">
+                Login
+            </Typography>
+            <form onSubmit={handleSubmit(onSubmit)}><TextField
+                className={styles.field}
+                label="E-Mail"
+                error={Boolean(errors.email?.message)}
+                helperText={errors.email?.message}
+                {...register('email', {required: 'write email'})}
+                fullWidth
+            />
+                <TextField className={styles.field} label="Password"
+                           error={Boolean(errors.password?.message)}
+                           helperText={errors.password?.message}
+                           {...register('password', {required: 'write password'})}
+                           fullWidth/>
+                <Button type={"submit"} size="large" variant="contained" fullWidth>
+                    Login
+                </Button></form>
+        </Paper>
+    );
 };

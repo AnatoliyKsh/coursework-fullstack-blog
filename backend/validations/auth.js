@@ -1,5 +1,6 @@
 import {body} from 'express-validator'
 
+// required for validations
 export const registerValidation = [
     body('email').isEmail(),
     body('password').isLength({min: 5}),
@@ -12,8 +13,8 @@ export const loginValidation = [
     body('password').isLength({min: 5}),]
 
 export const postCreateValidation = [
-   body('titel').isLength({min: 3}).isString(),
-    body('text').isLength({min:3}).isString(),
+    body('titel').isLength({min: 3}).isString(),
+    body('text').isLength({min: 3}).isString(),
     body('tags').optional().isString,
     body('imageUrl').optional().isString(),
 ]

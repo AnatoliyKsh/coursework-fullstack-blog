@@ -1,5 +1,6 @@
 import PostModel from '../models/Post.js';
 
+// this get last tags which dataBase has
 export const getLastTags = async (req, res) => {
   try {
     const posts = await PostModel.find().limit(5).exec();
@@ -18,6 +19,7 @@ export const getLastTags = async (req, res) => {
   }
 };
 
+// this get all posts for Home page
 export const getAll = async (req, res) => {
   try {
     const posts = await PostModel.find().populate('user').exec();
@@ -30,6 +32,7 @@ export const getAll = async (req, res) => {
   }
 };
 
+// this get one posts
 export const getOne = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -69,6 +72,7 @@ export const getOne = async (req, res) => {
   }
 };
 
+// this remove post
 export const remove = async (req, res) => {
   try {
     const postId = req.params.id;
@@ -104,6 +108,7 @@ export const remove = async (req, res) => {
   }
 };
 
+//this crate a post
 export const create = async (req, res) => {
   try {
     const doc = new PostModel({
@@ -125,6 +130,7 @@ export const create = async (req, res) => {
   }
 };
 
+//this update a posts if you want it
 export const update = async (req, res) => {
   try {
     const postId = req.params.id;

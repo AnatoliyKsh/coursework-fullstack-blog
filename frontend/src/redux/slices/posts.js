@@ -1,66 +1,88 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "../../axios";
 
-export const fetchPosts =createAsyncThunk('posts/fetchPosts',async ()=>{
-    const { data} = await axios.get('/posts')
+/*  function to handle fetching posts asynchronously from an API endpoint.
+When dispatched, it makes a GET request to '/posts', extracts and returns
+the data from the response */
+
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+    const {data} = await axios.get('/posts')
     return data
 })
 
-export const fetchTags =createAsyncThunk('posts/fetchTags',async ()=>{
-    const { data} = await axios.get('/tags')
+/*  function to handle fetching posts asynchronously from an API endpoint.
+When dispatched, it makes a GET request to '/tags', extracts and returns
+the data from the response */
+
+export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
+    const {data} = await axios.get('/tags')
     return data
 })
 
-export const fetchRemovePost =createAsyncThunk('posts/fetchTags',async (id)=>{;
+/* when dispatched, it sends a DELETE request to the API endpoint associated
+with a specific post id  */
+
+export const fetchRemovePost = createAsyncThunk('posts/fetchTags', async (id) => {
+    ;
     axios.delete(`/posts/${id}`)
 })
 
+/* initial sates for posts and tags */
+
 const initialState = {
-    posts:{
+    posts: {
         item: [],
         status: 'Loading',
     },
-    tags:{
+    tags: {
         item: [],
         status: 'Loading',
     },
 }
 
+/* creating a slice */
+
 const postsSlice = createSlice({
-    name:'posts',
+    name: 'posts',
     initialState,
-    reducer:{},
-    extraReducers:{
-        [fetchPosts.pending]:(state)=>{
+    reducer: {},
+    extraReducers: {
+
+        // posts
+        [fetchPosts.pending]: (state) => {
             state.posts.items = [];
             state.posts.status = 'loading';
-},
-        [fetchPosts.fulfilled]:(state,action )=>{
+        },
+        [fetchPosts.fulfilled]: (state, action) => {
             state.posts.items = action.payload;
             state.posts.status = 'loaded';
         },
-        [fetchPosts.rejected]:(state)=>{
+        [fetchPosts.rejected]: (state) => {
             state.posts.items = [];
             state.posts.status = 'error';
         },
-        [fetchTags.pending]:(state)=>{
+
+        //tags
+        [fetchTags.pending]: (state) => {
             state.tags.items = [];
             state.tags.status = 'loading';
         },
-        [fetchTags.fulfilled]:(state,action )=>{
+        [fetchTags.fulfilled]: (state, action) => {
             state.tags.items = action.payload;
             state.tags.status = 'loaded';
         },
-        [fetchTags.rejected]:(state)=>{
+        [fetchTags.rejected]: (state) => {
             state.tags.items = [];
             state.tags.status = 'error';
         },
-            [fetchRemovePost.pending]:(state, action)=>{
-                state.posts.items = state.posts.items.filter((obj)=> obj._id === action.payload);
-            },
+
+        //remove post
+        [fetchRemovePost.pending]: (state, action) => {
+            state.posts.items = state.posts.items.filter((obj) => obj._id === action.payload);
+        },
 
 
     }
 })
 
-export const  postsReducer = postsSlice.reducer
+export const postsReducer = postsSlice.reducer

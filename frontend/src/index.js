@@ -9,6 +9,8 @@ import {ThemeProvider} from "@mui/material";
 import {theme} from "./theme";
 import store from "./redux/store"
 
+/* folder with index in react app with navigation, themes, and the main App */
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
