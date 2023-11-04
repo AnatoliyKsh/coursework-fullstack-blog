@@ -3,6 +3,12 @@ SSH: git@github.com:AnatoliyKsh/coursework-fullstack-blog.git
 
 HTTPS: https://github.com/AnatoliyKsh/coursework-fullstack-blog.git
 
+Frontend: SCSS, HTML, JSX, JS, React js, libraries: react-router-dom, redux, axios, MUI, react-markdown
+
+Backend: Node js, JS, Express, libraries: bcrypt, mongoose
+
+DataBase: MongoDB
+
 
 ## To launch the application, you must first open the necessary directories in the console and then provide all the necessary data to launch. Instructions are below
 ## How to run:

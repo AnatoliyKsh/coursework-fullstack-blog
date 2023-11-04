@@ -31,6 +31,7 @@ export const Login = () => {
         if ('token' in data.payload) {
             window.localStorage.setItem('tekon', data.payload.token)
         }
+        console.log(data)
     }
 
     // if the user is authenticated, redirects to the home page
