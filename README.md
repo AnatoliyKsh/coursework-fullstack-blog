@@ -3,6 +3,8 @@ SSH: git@github.com:AnatoliyKsh/coursework-fullstack-blog.git
 
 HTTPS: https://github.com/AnatoliyKsh/coursework-fullstack-blog.git
 
+## Technologies
+
 Frontend: SCSS, HTML, JSX, JS, React js, libraries: react-router-dom, redux, axios, MUI, react-markdown
 
 Backend: Node js, JS, Express, libraries: bcrypt, mongoose
